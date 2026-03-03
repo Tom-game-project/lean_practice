@@ -175,15 +175,34 @@ theorem mul_add (a b c: MyNat): a * (b + c) = a * b + a * c := by
     rw [add_comm]
     rw [← add_assoc]
     
--- theorem mul_assoc (a b c: MyNat): a * b * c = a * (b * c) := by
---   induction c with
---   | zero =>
---     rw [mul_zero]
---     rw [mul_zero]
---     rw [mul_zero]
---   | succ d hd =>
---     rw [mul_succ]
---     rw [mul_succ]
---     rw [hd]
+theorem add_mul (a b c: MyNat): (a + b) * c = a * c + b * c := by
+  induction c with
+  | zero =>
+    rw [mul_zero]
+    rw [mul_zero]
+    rw [mul_zero]
+    rw [add_zero]
+  | succ d hd =>
+    rw [mul_succ]
+    rw [mul_succ]
+    rw [mul_succ]
+    rw [hd]
+    rw [← add_assoc]
+    rw [← add_assoc]
+    rw [add_comm]
+    rw [add_right_comm]
+    rw [add_comm]
 
+theorem mul_assoc (a b c: MyNat): a * b * c = a * (b * c) := by
+  induction a with
+  | zero =>
+    rw [zero_mul]
+    rw [zero_mul]
+    rw [zero_mul]
+  | succ d hd =>
+    rw [succ_mul]
+    rw [succ_mul]
+    rw [add_mul]
+    rw [hd]
 
+def hello := "world"
