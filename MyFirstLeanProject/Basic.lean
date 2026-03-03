@@ -72,12 +72,11 @@ theorem add_right_comm (a b c: MyNat): a + b + c = a + c + b := by
     rw [succ_add]
     rw [hd]
 
-theorem add_assoc (a b c: MyNat): a + b + c = a + (c + b) := by
+theorem add_assoc (a b c: MyNat): a + b + c = a + (b + c) := by
   induction a with
   | zero =>
     rw [zero_add]
     rw [zero_add]
-    rw [add_comm]
   | succ k hd =>
     rw [succ_add]
     rw [succ_add]
@@ -90,7 +89,6 @@ def mul (m n : MyNat) : MyNat :=
   match n with
   | MyNat.zero => MyNat.zero
   | MyNat.succ n => add (mul m n) m
-
 
 -- たぶんこれで、中置記法を使えるようにする
 instance : Mul MyNat where
@@ -158,5 +156,34 @@ theorem mul_comm (a b : MyNat): a * b = b * a := by
     rw [succ_mul]
     rw [mul_succ]
     rw [hd]
+
+theorem mul_add (a b c: MyNat): a * (b + c) = a * b + a * c := by
+  induction a with
+  | zero =>
+    rw [zero_mul]
+    rw [zero_mul]
+    rw [zero_mul]
+    rw [add_zero]
+  | succ d hd =>
+    rw [succ_mul]
+    rw [succ_mul]
+    rw [succ_mul]
+    rw [hd]
+    rw [← add_assoc]
+    rw [add_comm]
+    rw [add_right_comm]
+    rw [add_comm]
+    rw [← add_assoc]
+    
+-- theorem mul_assoc (a b c: MyNat): a * b * c = a * (b * c) := by
+--   induction c with
+--   | zero =>
+--     rw [mul_zero]
+--     rw [mul_zero]
+--     rw [mul_zero]
+--   | succ d hd =>
+--     rw [mul_succ]
+--     rw [mul_succ]
+--     rw [hd]
 
 
